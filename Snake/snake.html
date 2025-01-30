@@ -4,18 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryan Ngu: Snake</title>
+    <title>Ryan Ngu: Snake Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #00bbff;
+        }
+        canvas {
+            border: 2px solid #000;
+            background-color: #4CAF50 ;
+        }
+        .score {
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-    <canvas id="grid"></canvas>
-    <div>
-        <span>Score</span>: <span id="score"></span>
-    </div>
-    <div>
-        <span>Highscore</span>: <span id="highscore"></span>
-    </div>
-    <script src="snake.js"></script>
+    <ul>
+        <canvas id="grid" width="400" height="400"></canvas>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="score">Highscore: <span id="highscore">0</span></div>
+    </ul>
 </body>
+<script src="snake.js"></script>
 </html>
