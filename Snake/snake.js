@@ -6,19 +6,14 @@ const box = 20
 canvas.width = grid.width * box;
 canvas.height = grid.height * box;
 
-let apple = {
-    x: Math.floor(Math.random() * grid.width),
-    y: Math.floor(Math.random() * grid.height)
-};
+let apple = { x: 0, y: 0 };
 
 let snake_trail = [];
 let snake_x, snake_y;
 let snake_dx, snake_dy;
-let initial_length;
 
-let grid_dimension =20;
-canvas.width = grid_dimension * box;
-canvas.height = grid_dimension * box;
+canvas.width = grid.width * box;
+canvas.height = grid.height * box;
 
 let score_span = document.getElementById("score");
 let highscore_span = document.getElementById("highscore");
@@ -48,30 +43,10 @@ function resetGame() {
 
 function keyPush(event) {
     switch (event.keyCode) {
-        case 37:
-            if (snake_dx != 1){
-                snake_dx = -1;
-                snake_dy = 0;
-            }
-            break;
-        case 38:
-            if (snake_dy != 1){
-                snake_dx = 0;
-                snake_dy = -1;
-            }
-            break;
-        case 39:
-            if (snake_dx != -1){
-                snake_dx = 1;
-                snake_dy = 0;
-            }
-            break;
-        case 40:
-            if (snake_dy != -1){
-                snake_dx = 0;
-                snake_dy = 1;
-            }
-            break;
+        case 37: if (snake_dx != 1){snake_dx = -1;snake_dy = 0;}break;
+        case 38: if (snake_dy != 1){snake_dx = 0;snake_dy = -1;}break;
+        case 39: if (snake_dx != -1){snake_dx = 1;snake_dy = 0;}break;
+        case 40: if (snake_dy != -1){snake_dx = 0;snake_dy = 1;}break;
     }
 }
 
@@ -85,7 +60,7 @@ function game() {
 
 function checkSnake(){
     //snake out of bound
-    if (snake_x < 0 || snake_y < 0 || snake_x > grid_dimension-1 || snake_y > grid_dimension-1){
+    if (snake_x < 0 || snake_y < 0 || snake_x > grid.width-1 || snake_y > grid.height-1){
         resetGame();
     }
 
@@ -101,8 +76,8 @@ function checkSnake(){
     if (apple.x == snake_x && apple.y == snake_y) {
         score++;
         score_span.innerHTML = score;
-        apple.x = Math.floor(Math.random() * grid_dimension);
-        apple.y = Math.floor(Math.random() * grid_dimension);
+        apple.x = Math.floor(Math.random() * (grid.width - 1) );
+        apple.y = Math.floor(Math.random() * (grid.height - 1) );
     }
 }
 
@@ -128,11 +103,5 @@ function updateFrame() {
 
     // draw apple
     c.fillStyle = "red";
-    c.fillRect(
-        apple.x * box,
-        apple.y * box,
-        box - 2,
-        box - 2
-    );
-
+    c.fillRect(apple.x * box,apple.y * box,box - 2,box - 2);
 }
