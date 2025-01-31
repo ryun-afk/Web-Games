@@ -1,10 +1,10 @@
 let canvas = document.getElementById("grid");
 let c = canvas.getContext("2d");
 
-const grid = { width: 20, height: 20 };
-const box = 20
-canvas.width = grid.width * box;
-canvas.height = grid.height * box;
+const grid = { width: 21, height: 21 };
+const scalar = 20
+canvas.width = grid.width * scalar;
+canvas.height = grid.height * scalar;
 
 let apple = { x: 0, y: 0 };
 
@@ -12,8 +12,8 @@ let snake_trail = [];
 let snake_x, snake_y;
 let snake_dx, snake_dy;
 
-canvas.width = grid.width * box;
-canvas.height = grid.height * box;
+canvas.width = grid.width * scalar;
+canvas.height = grid.height * scalar;
 
 let score_span = document.getElementById("score");
 let highscore_span = document.getElementById("highscore");
@@ -32,12 +32,12 @@ function resetGame() {
     highscore_span.innerHTML = highscore;
 
 
-    snake_x = Math.floor(Math.random() * canvas.width / box);
-    snake_y = Math.floor(Math.random() * canvas.height / box);
+    snake_x = grid.width / 2;
+    snake_y = grid.height / 2;
     snake_dx = 0;
     snake_dy = 0;
-    apple.x = Math.floor(Math.random() * canvas.width / box);
-    apple.y = Math.floor(Math.random() * canvas.height / box);
+    apple.x = Math.floor(Math.random() * canvas.width / scalar);
+    apple.y = Math.floor(Math.random() * canvas.height / scalar);
     initial_length = 5;
 }
 
@@ -51,14 +51,17 @@ function keyPush(event) {
 }
 
 function game() {
-    snake_x += snake_dx;
-    snake_y += snake_dy;
-    
-    checkSnake();
+    updateSnake()
+    checkEnviroment();
     updateFrame();
 }
 
-function checkSnake(){
+function updateSnake(){
+    snake_x += snake_dx;
+    snake_y += snake_dy;
+}
+
+function checkEnviroment(){
     //snake out of bound
     if (snake_x < 0 || snake_y < 0 || snake_x > grid.width-1 || snake_y > grid.height-1){
         resetGame();
@@ -88,10 +91,10 @@ function updateFrame() {
     c.fillStyle = "lime";
     for (var i = 0; i < snake_trail.length; i++) {
         c.fillRect(
-            snake_trail[i].x * box,
-            snake_trail[i].y * box,
-            box - 2,
-            box - 2
+            snake_trail[i].x * scalar,
+            snake_trail[i].y * scalar,
+            scalar - 2,
+            scalar - 2
         );
     }
 
@@ -103,5 +106,5 @@ function updateFrame() {
 
     // draw apple
     c.fillStyle = "red";
-    c.fillRect(apple.x * box,apple.y * box,box - 2,box - 2);
+    c.fillRect(apple.x * scalar,apple.y * scalar,scalar - 2,scalar - 2);
 }
