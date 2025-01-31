@@ -25,17 +25,17 @@ let highscore_span = document.getElementById("highscore");
 
 window.onload = function () {
     highscore = 0;
-
-    gameReset();
     document.addEventListener("keydown", keyPush);
+    resetGame();
     setInterval(game, 100);
 }
 
-function gameReset() {
+function resetGame() {
     if (score > highscore) {highscore = score;}
     score = 0;
     score_span.innerHTML = score;
     highscore_span.innerHTML = highscore;
+
 
     snake_x = Math.floor(Math.random() * canvas.width / box);
     snake_y = Math.floor(Math.random() * canvas.height / box);
@@ -76,28 +76,24 @@ function keyPush(event) {
 }
 
 function game() {
-    width = 100
-
     snake_x += snake_dx;
     snake_y += snake_dy;
     
     checkSnake();
-    drawBackground();
-    drawSnake();
-    drawApple();
+    updateFrame();
 }
 
 function checkSnake(){
     //snake out of bound
     if (snake_x < 0 || snake_y < 0 || snake_x > grid_dimension-1 || snake_y > grid_dimension-1){
-        gameReset();
+        resetGame();
     }
 
     //snake eats itself
     for (var i = 1; i < snake_trail.length -1;i++){
         if(snake_dx==0 && snake_dy==0){break;}
         if(snake_trail[i].x==snake_x && snake_trail[i].y == snake_y){
-            gameReset();
+            resetGame();
         }
     }
 
@@ -110,13 +106,10 @@ function checkSnake(){
     }
 }
 
-function drawBackground() {
-    c.strokeStyle = "black";
-    c.fillStyle = "green";
-    c.fillRect(0, 0, canvas.width, canvas.height);
-}
+function updateFrame() {
+    c.clearRect(0, 0, canvas.width, canvas.height);
 
-function drawSnake() {
+    // draw snake
     c.fillStyle = "lime";
     for (var i = 0; i < snake_trail.length; i++) {
         c.fillRect(
@@ -127,13 +120,13 @@ function drawSnake() {
         );
     }
 
+    // move snake data
     snake_trail.push({x: snake_x,y: snake_y});
     while (snake_trail.length > initial_length + score) {
         snake_trail.shift();
     }
-}
 
-function drawApple() {
+    // draw apple
     c.fillStyle = "red";
     c.fillRect(
         apple.x * box,
@@ -141,4 +134,5 @@ function drawApple() {
         box - 2,
         box - 2
     );
+
 }
