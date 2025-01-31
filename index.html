@@ -6,6 +6,17 @@
     <title>Ryan's Web Game Projects</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        header {
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            text-align: left;
+        }
+        header h1 {
+            font-size: 20px; 
+            color: #333;
+            margin: 0;
+        }
         body {
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -55,6 +66,9 @@
     </style>
 </head>
 <body>
+    <header>
+        <h3><a href='https://ryun-afk.github.io/ryun-afk.github.io/index.html'>Web Games</a></h3>
+    </header>
     <h1>Web Game Projects</h1>
     <div class="content">
         <h3><a href="#" onclick="openPopup('../Web-Games/Snake/snake.html')">Snake</a></h3>
@@ -73,8 +87,7 @@
 </body>
 <script>
     function openPopup(url) {
-        window.open(url, 'popup', 'width=500,height=600,resizable=no,scrollbars=no');
-        return false;
+        window.open(url, 'popup', 'width=500,height=600,resizable=no,scrollbars=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,copyhistory=no');
     }
 </script>
 </html>
