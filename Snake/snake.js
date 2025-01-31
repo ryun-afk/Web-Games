@@ -31,9 +31,8 @@ function resetGame() {
     score_span.innerHTML = score;
     highscore_span.innerHTML = highscore;
 
-
-    snake_x = grid.width / 2;
-    snake_y = grid.height / 2;
+    snake_x = Math.floor(grid.width / 2) + 1;
+    snake_y = Math.floor(grid.height / 2) + 1;
     snake_dx = 0;
     snake_dy = 0;
     apple.x = Math.floor(Math.random() * canvas.width / scalar);

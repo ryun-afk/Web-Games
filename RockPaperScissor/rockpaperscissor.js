@@ -6,13 +6,13 @@ function play(userChoice) {
 }
 
 function getResult(userChoice, computerChoice) {
-    if (userChoice === computerChoice) {
+    if (userChoice == computerChoice) {
         return "It's a tie!";
     }
     if (
-        (userChoice === 'rock' && computerChoice === 'scissors') ||
-        (userChoice === 'paper' && computerChoice === 'rock') ||
-        (userChoice === 'scissors' && computerChoice === 'paper')
+        (userChoice == 'rock' && computerChoice === 'scissors') ||
+        (userChoice == 'paper' && computerChoice === 'rock') ||
+        (userChoice == 'scissors' && computerChoice === 'paper')
     ) {
         return "You win!";
     }
