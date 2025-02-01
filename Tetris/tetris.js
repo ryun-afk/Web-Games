@@ -10,9 +10,19 @@ canvas.height = grid.height * scalar;
 let board = grid;
 let player = { x: 5, y: 0 };
 
+function gameReset(){
+    player = { x: 5, y: 0 };
+}
+
 function drawSquare(x,y,color) {
     c.fillStyle = color;
     c.fillRect(x*scalar,y*scalar,scalar-2,scalar-2);
+}
+
+function checkEnviroment(){
+    if(player.y > grid.height){
+        gameReset();
+    }
 }
 
 function updatePlayer(){
@@ -22,10 +32,12 @@ function updatePlayer(){
 function updateFrame(){
     c.clearRect(0,0,canvas.width,canvas.height);
     drawSquare(player.x,player.y,"black");
+    drawBoard();
 }
 
 function game() {
     updatePlayer();
+    checkEnviroment();
     updateFrame();
     //updateScore();
 }
