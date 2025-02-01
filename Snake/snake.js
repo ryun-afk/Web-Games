@@ -18,12 +18,10 @@ canvas.height = grid.height * scalar;
 let score_span = document.getElementById("score");
 let highscore_span = document.getElementById("highscore");
 
-window.onload = function () {
-    highscore = 0;
-    document.addEventListener("keydown", keyPush);
-    resetGame();
-    setInterval(game, 100);
-}
+highscore = 0;
+document.addEventListener("keydown", keyPush);
+resetGame();
+ setInterval(game, 100);
 
 function resetGame() {
     if (score > highscore) {highscore = score;}
