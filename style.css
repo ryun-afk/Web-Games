@@ -1,15 +1,15 @@
 header {
     padding: 0px 8px;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 56px;
     background-color: #fff;
     border-bottom: 2px solid #000;
-    
     align-items: left;
     justify-content: space-between
+    
 }
 h1 a{
     top: 0;
@@ -55,5 +55,5 @@ h3 a:hover {
     border-radius: 10px;
     background-color: #fff;
     width: 400px;
-
+    position:-webkit-sticky;
 }
