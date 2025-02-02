@@ -42,22 +42,27 @@ const PIECES = [
     ["blue",[[1,1,1],[0,0,1],[0,0,0]]]
 ];
 
-let player = {
-    color: PIECES[0][0],
-    matrix: PIECES[0][1],
-    x: 0,
-    y: 0,
-};
-function drawPlayer(){
-    for(var i = 0; i < player.matrix.length; i++){
-        for (var j = 0; j < player.matrix.length; j++){
-            if (player.matrix[j][i]){
-                drawSquare(player.x + i,player.y + j,player.color);
+function Piece(color, matrix){
+    this.matrix = matrix;
+    this.color = color;
+    this.x = 0;
+    this.y = 0;
+}
+
+let piece = new Piece(PIECES[0][0],PIECES[0][1]);
+
+function drawPiece(){
+    for(var i = 0; i < piece.matrix.length; i++){
+        for (var j = 0; j < piece.matrix.length; j++){
+            if (piece.matrix[j][i]){
+                drawSquare(piece.x + i,piece.y + j,piece.color);
             }
         }
     }
 }
-drawPlayer();
+
+console.log(piece.matrix.length);
+drawPiece();
 
 /*
 let player = {x: 0, y: 0, color: null, matrix: null};
