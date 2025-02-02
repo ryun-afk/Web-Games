@@ -61,7 +61,20 @@ function drawPiece(){
     }
 }
 
-
+document.addEventListener("keydown", keyPush);
+function keyPush(event) {
+    switch (event.keyCode) {
+        case 37: piece.x -= 1;
+        break;
+        case 38: piece.y -= 1;
+        break;
+        case 39: piece.x += 1;
+        break;
+        case 40: piece.y += 1;
+        break;
+    }
+    updateFrame();
+}
 
 function updateFrame(){
     c.clearRect(0, 0, canvas.width, canvas.height);
