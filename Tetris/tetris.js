@@ -1,13 +1,11 @@
 const canvas = document.getElementById('grid');
 const c = canvas.getContext('2d');
 
+// Define the grid dimensions and scaling factor
 const grid = { width: 10, height: 20 };
 const scalar = 20;
 canvas.width = grid.width * scalar;
 canvas.height = grid.height * scalar;
-
-const empty = "white";
-
 function drawSquare(x,y,color) {
     c.fillStyle = color;
     c.fillRect(x*scalar,y*scalar,scalar,scalar);
@@ -15,6 +13,8 @@ function drawSquare(x,y,color) {
     c.strokeRect(x*scalar,y*scalar,scalar,scalar);
 }
 
+// Create the game board and initialize it with empty cells
+const empty = "white";
 let board = [];
 for (var i = 0; i < grid.width; i++){
     board[i] = [];
@@ -22,7 +22,6 @@ for (var i = 0; i < grid.width; i++){
         board[i][j] = empty;
     }
 }
-
 function drawBoard(){
     for (var i = 0; i < grid.width; i++){
         for (let j = 0; j < grid.height; j++){
@@ -30,8 +29,8 @@ function drawBoard(){
         }
     }
 }
-drawBoard();
 
+// Define the Tetris pieces and their colors
 const PIECES = [
     ["red",[[1,1,0],[0,1,1],[0,0,0]]],
     ["green",[[0,1,1],[1,1,0],[0,0,0]]],
@@ -42,6 +41,7 @@ const PIECES = [
     ["blue",[[1,1,1],[0,0,1],[0,0,0]]]
 ];
 
+// Constructor function for a Tetris piece
 function Piece(color, matrix){
     this.matrix = matrix;
     this.color = color;
@@ -49,8 +49,8 @@ function Piece(color, matrix){
     this.y = 0;
 }
 
+// Function to draw the current piece on the board
 let piece = new Piece(PIECES[0][0],PIECES[0][1]);
-
 function drawPiece(){
     for(var i = 0; i < piece.matrix.length; i++){
         for (var j = 0; j < piece.matrix.length; j++){
@@ -61,53 +61,12 @@ function drawPiece(){
     }
 }
 
-console.log(piece.matrix.length);
-drawPiece();
 
-/*
-let player = {x: 0, y: 0, color: null, matrix: null};
-function createPiece(){
-    player.x = Math.floor(grid.width / 2);
-    player.y = 5;
-    piece = PIECES[Math.floor(Math.random() * PIECES.length)];
-    color = piece[0];
-    matrix = piece[1];
+
+function updateFrame(){
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    drawBoard();
+    drawPiece();
 }
 
-
-
-let board = [];
-for (var i = 0; i < grid.width; i++){
-    board[i] = [];
-    for (let j = 0; j < grid.height; j++){
-        board[i][j] = 0;
-    }
-}
-
-function Piece(matrix, color){
-    this.matrix = matrix;
-    this.color = color;
-    this.x = 0;
-    this.y = 0;
-}
-
-function drawBoard(){
-    c.clearRect(0,0,canvas.width,canvas.height);
-    for (var i = 0; i < grid.width; i++){
-        for (let j = 0; j < grid.height; j++){
-            drawSquare(i,j,board[i][j]);
-        }
-    }
-    
-    for (var i = 0; i < player.matrix.length; i++){
-        for (let j = 0; j < player.matrix.length; j++){
-            drawSquare(player.x + i,player.y + j,player.color);
-        }
-    }
-}
-
-document.addEventListener("keydown", keyPush);
-
-drawBoard();
-
-*/
+setInterval(updateFrame,1000);
