@@ -1,45 +1,108 @@
 const canvas = document.getElementById('grid');
 const c = canvas.getContext('2d');
 
-// Grid dimensions
 const grid = { width: 10, height: 20 };
 const scalar = 20;
 canvas.width = grid.width * scalar;
 canvas.height = grid.height * scalar;
 
-let board = grid;
-let player = { x: 5, y: 0 };
-
-function gameReset(){
-    player = { x: 5, y: 0 };
-}
+const empty = "white";
 
 function drawSquare(x,y,color) {
     c.fillStyle = color;
-    c.fillRect(x*scalar,y*scalar,scalar-2,scalar-2);
+    c.fillRect(x*scalar,y*scalar,scalar,scalar);
+    c.strokeStyle = "black";
+    c.strokeRect(x*scalar,y*scalar,scalar,scalar);
 }
 
-function checkEnviroment(){
-    if(player.y > grid.height){
-        gameReset();
+let board = [];
+for (var i = 0; i < grid.width; i++){
+    board[i] = [];
+    for (let j = 0; j < grid.height; j++){
+        board[i][j] = empty;
     }
 }
 
-function updatePlayer(){
-    player.y += 1;
+function drawBoard(){
+    for (var i = 0; i < grid.width; i++){
+        for (let j = 0; j < grid.height; j++){
+            drawSquare(i,j,board[i][j]);
+        }
+    }
+}
+drawBoard();
+
+const PIECES = [
+    ["red",[[1,1,0],[0,1,1],[0,0,0]]],
+    ["green",[[0,1,1],[1,1,0],[0,0,0]]],
+    ["purple",[[1,1,1],[0,1,0],[0,0,0]]],
+    ["yellow",[[1,1],[1,1]]],
+    ["orange",[[1,1,1],[1,0,0],[0,0,0]]],
+    ["cyan",[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]]],
+    ["blue",[[1,1,1],[0,0,1],[0,0,0]]]
+];
+
+let player = {
+    color: PIECES[0][0],
+    matrix: PIECES[0][1],
+    x: 0,
+    y: 0,
+};
+function drawPlayer(){
+    for(var i = 0; i < player.matrix.length; i++){
+        for (var j = 0; j < player.matrix.length; j++){
+            if (player.matrix[j][i]){
+                drawSquare(player.x + i,player.y + j,player.color);
+            }
+        }
+    }
+}
+drawPlayer();
+
+/*
+let player = {x: 0, y: 0, color: null, matrix: null};
+function createPiece(){
+    player.x = Math.floor(grid.width / 2);
+    player.y = 5;
+    piece = PIECES[Math.floor(Math.random() * PIECES.length)];
+    color = piece[0];
+    matrix = piece[1];
 }
 
-function updateFrame(){
+
+
+let board = [];
+for (var i = 0; i < grid.width; i++){
+    board[i] = [];
+    for (let j = 0; j < grid.height; j++){
+        board[i][j] = 0;
+    }
+}
+
+function Piece(matrix, color){
+    this.matrix = matrix;
+    this.color = color;
+    this.x = 0;
+    this.y = 0;
+}
+
+function drawBoard(){
     c.clearRect(0,0,canvas.width,canvas.height);
-    drawSquare(player.x,player.y,"black");
-    drawBoard();
+    for (var i = 0; i < grid.width; i++){
+        for (let j = 0; j < grid.height; j++){
+            drawSquare(i,j,board[i][j]);
+        }
+    }
+    
+    for (var i = 0; i < player.matrix.length; i++){
+        for (let j = 0; j < player.matrix.length; j++){
+            drawSquare(player.x + i,player.y + j,player.color);
+        }
+    }
 }
 
-function game() {
-    updatePlayer();
-    checkEnviroment();
-    updateFrame();
-    //updateScore();
-}
+document.addEventListener("keydown", keyPush);
 
-setInterval(game, 1000);
+drawBoard();
+
+*/
