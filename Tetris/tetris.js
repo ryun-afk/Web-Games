@@ -98,15 +98,6 @@ function transpose(matrix) {
     return result
   }
 
-function test(){
-    for(let i = 0; i < piece.matrix.length; i++){
-        console.log(piece.matrix[i][0]+ " " + piece.matrix[i][1]+ " " + piece.matrix[i][2])
-        for(let j = 0; j < piece.matrix[0].length;j++){
-        }
-        console.log();
-    }
-}
-
 function rotatePiece(p){
     temp = p.matrix;
     temp = transpose(temp);
@@ -118,7 +109,7 @@ function checkCollision(){
     for(let i = 0; i < piece.matrix.length; i++){
         for(let j = 0; j < piece.matrix[0].length;j++){
             if(piece.matrix[i][j] == 1 && board[piece.x + j][piece.y +i] != empty){
-                lockPiece();
+                return true;
             }
         }
     }
@@ -133,8 +124,11 @@ function checkCollision(){
         }
         if( temp!=0){displacement++;}
     if(piece.y > grid.height - displacement){
-        lockPiece();
+        piece.y -= 1;
+        return true;
     }
+
+    return false;
 }
 
 function lockPiece(){
@@ -167,12 +161,23 @@ function keyPush(event) {
 }
 
 function updateGame(){
-    piece.y += 1;
-    checkCollision();
     c.clearRect(0, 0, canvas.width, canvas.height);
     drawBoard();
     drawPiece();
 }
 
+function fallingPiece(){
+    piece.y += 1;
+    if (checkCollision()){
+        piece.y -= 1;
+        lockPiece();
+    }
+}
+
+function game(){
+    fallingPiece();
+    updateGame();
+}
+
 updateGame();
-setInterval(updateGame,1000);
+setInterval(game,1000);
