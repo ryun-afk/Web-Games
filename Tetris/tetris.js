@@ -98,13 +98,38 @@ function transpose(matrix) {
     return result
   }
 
+function test(){
+    for(let i = 0; i < piece.matrix.length; i++){
+        console.log(piece.matrix[i][0]+ " " + piece.matrix[i][1]+ " " + piece.matrix[i][2])
+        for(let j = 0; j < piece.matrix[0].length;j++){
+        }
+        console.log();
+    }
+}
 
 function rotatePiece(p){
     temp = p.matrix;
     temp = transpose(temp);
     temp = mirror(temp);
-
     piece.matrix = temp;
+}
+
+function checkCollision(){
+
+}
+
+function lockPiece(){
+    if (piece.y + 3 > grid.height){
+        for(let i = 0; i < piece.matrix.length; i++){
+            for(let j = 0; j < piece.matrix[0].length;j++){
+                if(piece.matrix[i][j]){
+                    board[piece.x + j][piece.y + i] = piece.color;
+                }
+            }
+        }
+        random = Math.floor(Math.random()*PIECES.length)
+        piece = new Piece(PIECES[random][0],PIECES[random][1]);
+    }
 }
 
 // Function to control the current piece
@@ -120,13 +145,17 @@ function keyPush(event) {
         case 40: piece.y += 1;
         break;
     }
-    updateFrame();
+    piece.y -= 1;
+    updateGame();
 }
 
-function updateFrame(){
+function updateGame(){
+    piece.y += 1;
+    lockPiece();
     c.clearRect(0, 0, canvas.width, canvas.height);
     drawBoard();
     drawPiece();
 }
-updateFrame();
-setInterval(updateFrame,1000);
+
+updateGame();
+setInterval(updateGame,1000);
