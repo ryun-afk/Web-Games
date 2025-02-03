@@ -115,21 +115,38 @@ function rotatePiece(p){
 }
 
 function checkCollision(){
-
+    for(let i = 0; i < piece.matrix.length; i++){
+        for(let j = 0; j < piece.matrix[0].length;j++){
+            if(piece.matrix[i][j] == 1 && board[piece.x + j][piece.y +i] != empty){
+                lockPiece();
+            }
+        }
+    }
+    
+    let displacement = 0;
+    let temp = 0;
+    for(let i = 0; i < piece.matrix.length; i++){
+        temp = 0;
+        for(let j = 0; j < piece.matrix[0].length; j++){
+            temp = temp + piece.matrix[i][j];
+            }
+        }
+        if( temp!=0){displacement++;}
+    if(piece.y > grid.height - displacement){
+        lockPiece();
+    }
 }
 
 function lockPiece(){
-    if (piece.y + 3 > grid.height){
-        for(let i = 0; i < piece.matrix.length; i++){
-            for(let j = 0; j < piece.matrix[0].length;j++){
-                if(piece.matrix[i][j]){
-                    board[piece.x + j][piece.y + i] = piece.color;
-                }
+    for(let i = 0; i < piece.matrix.length; i++){
+        for(let j = 0; j < piece.matrix[0].length;j++){
+            if(piece.matrix[i][j]){
+                board[piece.x + j][piece.y + i] = piece.color;
             }
         }
-        random = Math.floor(Math.random()*PIECES.length)
-        piece = new Piece(PIECES[random][0],PIECES[random][1]);
     }
+    random = Math.floor(Math.random()*PIECES.length);
+    piece = new Piece(PIECES[random][0],PIECES[random][1]); 
 }
 
 // Function to control the current piece
@@ -151,7 +168,7 @@ function keyPush(event) {
 
 function updateGame(){
     piece.y += 1;
-    lockPiece();
+    checkCollision();
     c.clearRect(0, 0, canvas.width, canvas.height);
     drawBoard();
     drawPiece();
