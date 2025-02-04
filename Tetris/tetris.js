@@ -4,7 +4,7 @@ const c = canvas.getContext('2d');
 // Define the grid dimensions and scaling factor
 const grid = { width: 10, height: 20 };
 const scalar = 20;
-canvas.width = grid.width * scalar;
+canvas.width = (grid.width) * scalar;
 canvas.height = grid.height * scalar;
 
 
@@ -18,10 +18,13 @@ function drawSquare(x,y,color) {
 // Create the game board and initialize it with empty cells
 const empty = "gray";
 let board = [];
-for (var i = 0; i < grid.width; i++){
+for (var i = 0; i < grid.width + 3 ; i++){
     board[i] = [];
-    for (let j = 0; j < grid.height; j++){
+    for (let j = 0; j < grid.height + 3; j++){
         board[i][j] = empty;
+        if(i>9){
+            board[i][j] = "black";
+        }
     }
 }
 function drawBoard(){
@@ -101,24 +104,10 @@ function transpose(matrix) {
 function checkCollision(){
     for(let i = 0; i < piece.matrix.length; i++){
         for(let j = 0; j < piece.matrix[0].length;j++){
-            if(piece.matrix[i][j] == 1 && board[piece.x + j][piece.y +i] != empty){
+            if((piece.matrix[i][j]) && board[piece.x + j][piece.y +i] != empty){
                 return true;
             }
         }
-    }
-    
-    let displacement = 0;
-    let temp = 0;
-    for(let i = 0; i < piece.matrix.length; i++){
-        temp = 0;
-        for(let j = 0; j < piece.matrix[0].length; j++){
-            temp = temp + piece.matrix[i][j];
-            }
-        }
-        if( temp!=0){displacement++;}
-    if(piece.y > grid.height - displacement){
-        piece.y -= 1;
-        return true;
     }
 
     return false;
@@ -140,6 +129,9 @@ function moveLeft(){
     if(piece.x > 0){
         piece.x -= 1;
     }
+    if(checkCollision()){
+        piece.x += 1;
+    }
 }
 
 function rotatePiece(p){
@@ -147,14 +139,23 @@ function rotatePiece(p){
     temp = transpose(temp);
     temp = mirror(temp);
     piece.matrix = temp;
-
 }
 
 function moveRight(){
+    if(piece.x < grid.width){
+        piece.x += 1;
+    }
+    if(checkCollision()){
+        piece.x -= 1;
+    }
 }
 
 function moveDown(){
-    if(piece.y + 1 > grid.height-2){
+    if(piece.y + 3 > grid.height){
+        lockPiece();
+    }
+    if(checkCollision()){
+        piece.y -=1;
         lockPiece();
     }
     piece.y += 1;
