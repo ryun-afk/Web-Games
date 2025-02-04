@@ -98,13 +98,6 @@ function transpose(matrix) {
     return result
   }
 
-function rotatePiece(p){
-    temp = p.matrix;
-    temp = transpose(temp);
-    temp = mirror(temp);
-    piece.matrix = temp;
-}
-
 function checkCollision(){
     for(let i = 0; i < piece.matrix.length; i++){
         for(let j = 0; j < piece.matrix[0].length;j++){
@@ -143,41 +136,56 @@ function lockPiece(){
     piece = new Piece(PIECES[random][0],PIECES[random][1]); 
 }
 
+function moveLeft(){
+    if(piece.x > 0){
+        piece.x -= 1;
+    }
+}
+
+function rotatePiece(p){
+    temp = p.matrix;
+    temp = transpose(temp);
+    temp = mirror(temp);
+    piece.matrix = temp;
+
+}
+
+function moveRight(){
+}
+
+function moveDown(){
+    if(piece.y + 1 > grid.height-2){
+        lockPiece();
+    }
+    piece.y += 1;
+}
+
 // Function to control the current piece
 document.addEventListener("keydown", keyPush);
 function keyPush(event) {
     switch (event.keyCode) {
-        case 37: piece.x -= 1;
+        case 37: moveLeft();
         break;
         case 38: rotatePiece(piece);
         break;
-        case 39: piece.x += 1;
+        case 39: moveRight();
         break;
-        case 40: piece.y += 1;
+        case 40: moveDown();
         break;
     }
-    piece.y -= 1;
-    updateGame();
+    drawGame();
 }
 
-function updateGame(){
+function drawGame(){
     c.clearRect(0, 0, canvas.width, canvas.height);
     drawBoard();
     drawPiece();
 }
 
-function fallingPiece(){
-    piece.y += 1;
-    if (checkCollision()){
-        piece.y -= 1;
-        lockPiece();
-    }
+function updateGame(){
+    moveDown();
+    drawGame();
 }
 
-function game(){
-    fallingPiece();
-    updateGame();
-}
-
-updateGame();
-setInterval(game,1000);
+drawGame();
+setInterval(updateGame,1000);
