@@ -22,14 +22,14 @@ for (var i = 0; i < grid.width + 3 ; i++){
     board[i] = [];
     for (let j = 0; j < grid.height + 3; j++){
         board[i][j] = empty;
-        if(i>9){
+        if(i>9 || j > 19){
             board[i][j] = "black";
         }
     }
 }
 function drawBoard(){
-    for (var i = 0; i < grid.width; i++){
-        for (let j = 0; j < grid.height; j++){
+    for (var i = 0; i < grid.width+3; i++){
+        for (let j = 0; j < grid.height+3; j++){
             drawSquare(i,j,board[i][j]);
         }
     }
@@ -151,7 +151,7 @@ function moveRight(){
 }
 
 function moveDown(){
-    if(piece.y + 3 > grid.height){
+    if(piece.y > grid.height){
         lockPiece();
     }
     if(checkCollision()){
