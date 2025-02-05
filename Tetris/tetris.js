@@ -18,15 +18,19 @@ function drawSquare(x,y,color) {
 // Create the game board and initialize it with empty cells
 const empty = "gray";
 let board = [];
-for (var i = 0; i < grid.width + 3 ; i++){
-    board[i] = [];
-    for (let j = 0; j < grid.height + 3; j++){
-        board[i][j] = empty;
-        if(i>9 || j > 19){
-            board[i][j] = "black";
+clearBoard();
+function clearBoard(){
+    for (var i = 0; i < grid.width + 3 ; i++){
+        board[i] = [];
+        for (let j = 0; j < grid.height + 3; j++){
+            board[i][j] = empty;
+            if(i>9 || j > 19){
+                board[i][j] = "black";
+            }
         }
     }
 }
+
 function drawBoard(){
     for (var i = 0; i < grid.width+3; i++){
         for (let j = 0; j < grid.height+3; j++){
@@ -151,14 +155,20 @@ function moveRight(){
 }
 
 function moveDown(){
-    if(piece.y > grid.height){
-        lockPiece();
-    }
-    if(checkCollision()){
-        piece.y -=1;
+    if(piece.y > grid.height -1){
         lockPiece();
     }
     piece.y += 1;
+    if(checkCollision()){
+        piece.y -=1;
+        if(piece.y ==0){
+            resetGame();
+        }
+        else{
+            lockPiece();
+        }
+        
+    }
 }
 
 // Function to control the current piece
@@ -177,6 +187,21 @@ function keyPush(event) {
     drawGame();
 }
 
+function clearLine(){
+    for (let i = 0; i <board.height; i++){
+        // search for filled rows
+        // move everything down to replace filled row
+    }
+}
+
+function resetGame(){
+    if(piece.y==0){
+        clearBoard();
+        random = Math.floor(Math.random()*PIECES.length)
+        piece = new Piece(PIECES[random][0],PIECES[random][1]);
+    }
+}
+
 function drawGame(){
     c.clearRect(0, 0, canvas.width, canvas.height);
     drawBoard();
@@ -184,8 +209,8 @@ function drawGame(){
 }
 
 function updateGame(){
-    moveDown();
     drawGame();
+    moveDown();
 }
 
 drawGame();
