@@ -1,0 +1,4 @@
+missing buffer on left side to allow piece to touch left wall
+clearLine is not working
+    add scores
+rotating on the right wall causes piece overlapping border. 

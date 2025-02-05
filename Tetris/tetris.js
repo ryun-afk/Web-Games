@@ -16,7 +16,7 @@ function drawSquare(x,y,color) {
 }
 
 // Create the game board and initialize it with empty cells
-const empty = "gray";
+const empty = "#f0f0f0";
 let board = [];
 clearBoard();
 function clearBoard(){
@@ -143,6 +143,7 @@ function rotatePiece(p){
     temp = transpose(temp);
     temp = mirror(temp);
     piece.matrix = temp;
+    // fix rotation to avoid rotating outside of border
 }
 
 function moveRight(){
@@ -187,10 +188,21 @@ function keyPush(event) {
     drawGame();
 }
 
+function copyLine(row){
+    board[row] = board[row+1];
+}
+
 function clearLine(){
-    for (let i = 0; i <board.height; i++){
-        // search for filled rows
-        // move everything down to replace filled row
+    let temp = 0;
+    for (let i = board.height; i > 0; i--){
+        for(let j = 0; j < board.width; j++){
+            temp = temp + board[i][j];
+        }
+        console.log(temp);
+        if (temp == 10){
+            copyLine(i);
+        }
+        temp = 0;
     }
 }
 
@@ -209,6 +221,7 @@ function drawGame(){
 }
 
 function updateGame(){
+    clearLine();
     drawGame();
     moveDown();
 }
