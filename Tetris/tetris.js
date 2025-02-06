@@ -2,7 +2,7 @@ const canvas = document.getElementById('grid');
 const c = canvas.getContext('2d');
 
 // Define the grid dimensions and scaling factor
-const grid = { width: 10, height: 20 };
+const grid = { width: 16, height: 26 };
 const scalar = 20;
 canvas.width = (grid.width) * scalar;
 canvas.height = grid.height * scalar;
@@ -17,23 +17,25 @@ function drawSquare(x,y,color) {
 
 // Create the game board and initialize it with empty cells
 const empty = "#f0f0f0";
+const border = "green";
 let board = [];
 clearBoard();
 function clearBoard(){
-    for (var i = 0; i < grid.width + 3 ; i++){
+    for (var i = 0; i < grid.width; i++){
         board[i] = [];
-        for (let j = 0; j < grid.height + 3; j++){
+        for (let j = 0; j < grid.height; j++){
             board[i][j] = empty;
-            if(i>9 || j > 19){
-                board[i][j] = "black";
+            if(i<3 || 12 < i || j<3 || 22 < j  ){
+                board[i][j] = border;
             }
         }
     }
 }
 
+// adjust draw after debug
 function drawBoard(){
-    for (var i = 0; i < grid.width+3; i++){
-        for (let j = 0; j < grid.height+3; j++){
+    for (var i = 0; i < grid.width; i++){
+        for (let j = 0; j < grid.height; j++){
             drawSquare(i,j,board[i][j]);
         }
     }
