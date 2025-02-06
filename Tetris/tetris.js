@@ -194,26 +194,16 @@ function keyPush(event) {
     drawGame();
 }
 
-function copyLine(row){
-    board[row] = board[row+1];
+function copyLine(){
+    
 }
 
 function clearLine(){
-    let temp = 0;
-    for (let i = board.height; i > 0; i--){
-        for(let j = 0; j < board.width; j++){
-            temp = temp + board[i][j];
-        }
-        console.log(temp);
-        if (temp == 10){
-            copyLine(i);
-        }
-        temp = 0;
-    }
+    copyLine;
 }
 
 function resetGame(){
-    if(piece.y==0){
+    if(piece.y < buffer){
         clearBoard();
         random = Math.floor(Math.random()*PIECES.length)
         piece = new Piece(PIECES[random][0],PIECES[random][1]);

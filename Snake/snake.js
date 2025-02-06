@@ -21,7 +21,7 @@ let highscore_span = document.getElementById("highscore");
 highscore = 0;
 document.addEventListener("keydown", keyPush);
 resetGame();
- setInterval(game, 100);
+setInterval(game, 100);
 
 function resetGame() {
     if (score > highscore) {highscore = score;}
