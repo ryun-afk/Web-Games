@@ -4,8 +4,9 @@ const c = canvas.getContext('2d');
 // Define the grid dimensions and scaling factor
 const grid = { width: 16, height: 26 };
 const scalar = 20;
+const buffer = 3;
 canvas.width = (grid.width) * scalar;
-canvas.height = grid.height * scalar;
+canvas.height = (grid.height) * scalar;
 
 
 function drawSquare(x,y,color) {
@@ -15,15 +16,24 @@ function drawSquare(x,y,color) {
     c.strokeRect(x*scalar,y*scalar,scalar,scalar);
 }
 
-// Create the game board and initialize it with empty cells
+// Create the game board
 const empty = "#f0f0f0";
 const border = "gray";
 let board = [];
-clearBoard();
+for (var i = 0; i < grid.width; i++){
+    board[i] = [];
+    for (let j = 0; j < grid.height; j++){
+        board[i][j] = empty;
+        if(i<3 || 12 < i || 22 < j  ){
+            board[i][j] = border;
+        }
+    }
+}
+
+
 function clearBoard(){
-    for (var i = 0; i < grid.width; i++){
-        board[i] = [];
-        for (let j = 0; j < grid.height; j++){
+    for (var i = 0; i < board.length; i++){
+        for (let j = 0; j < board[0].length; j++){
             board[i][j] = empty;
             if(i<3 || 12 < i || 22 < j  ){
                 board[i][j] = border;
@@ -32,10 +42,9 @@ function clearBoard(){
     }
 }
 
-// adjust draw after debug
 function drawBoard(){
-    for (var i = 0; i < grid.width; i++){
-        for (let j = 0; j < grid.height; j++){
+    for (var i = 0; i < board.length; i++){
+        for (let j = 0; j < board[0].length; j++){
             drawSquare(i,j,board[i][j]);
         }
     }
@@ -56,7 +65,7 @@ const PIECES = [
 function Piece(matrix,color){
     this.matrix = matrix;
     this.color = color;
-    this.x = 4;
+    this.x = grid.width/2 - 1;
     this.y = 0;
 }
 
@@ -132,9 +141,7 @@ function lockPiece(){
 }
 
 function moveLeft(){
-    if(piece.x > 0){
-        piece.x -= 1;
-    }
+    piece.x -= 1;
     if(checkCollision()){
         piece.x += 1;
     }
@@ -145,22 +152,19 @@ function rotatePiece(p){
     temp = transpose(temp);
     temp = mirror(temp);
     piece.matrix = temp;
-    // fix rotation to avoid rotating outside of border
+    if(checkCollision()){
+        piece.matrix = p.matrix;
+    }
 }
 
 function moveRight(){
-    if(piece.x < grid.width){
-        piece.x += 1;
-    }
+    piece.x += 1;
     if(checkCollision()){
         piece.x -= 1;
     }
 }
 
 function moveDown(){
-    if(piece.y > grid.height -1){
-        lockPiece();
-    }
     piece.y += 1;
     if(checkCollision()){
         piece.y -=1;

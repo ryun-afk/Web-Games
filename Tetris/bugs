@@ -1,9 +1,9 @@
 Tetris - 
 clearLine is not working
-rotating near wall causes piece overlapping. 
+rotating blocks needs checkcollision
 piece lock is one frame slow
 
 Notes:
-Use grid for canvas, display, display orientation. 
-Use board[][] for calculations
-    board has 3 tile buffer all around for collision detection
+grid represents tetris grid with buffer
+    canvas draws grid minus buffer
+    board holds collision data
