@@ -10,14 +10,14 @@ canvas.height = grid.height * scalar;
 
 function drawSquare(x,y,color) {
     c.fillStyle = color;
-    c.fillRect(x*scalar,y*scalar,scalar,scalar);
     c.strokeStyle = "black";
+    c.fillRect(x*scalar,y*scalar,scalar,scalar);
     c.strokeRect(x*scalar,y*scalar,scalar,scalar);
 }
 
 // Create the game board and initialize it with empty cells
 const empty = "#f0f0f0";
-const border = "green";
+const border = "gray";
 let board = [];
 clearBoard();
 function clearBoard(){
@@ -25,7 +25,7 @@ function clearBoard(){
         board[i] = [];
         for (let j = 0; j < grid.height; j++){
             board[i][j] = empty;
-            if(i<3 || 12 < i || j<3 || 22 < j  ){
+            if(i<3 || 12 < i || 22 < j  ){
                 board[i][j] = border;
             }
         }
