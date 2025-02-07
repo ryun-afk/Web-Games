@@ -244,6 +244,6 @@ let board = [];
 let piece;
 resetGame();
 drawGame();
-setInterval(updateGame,1000);
+setInterval(updateGame,500);
 
 
