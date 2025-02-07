@@ -2,5 +2,6 @@ Tetris -
 Bugs:
 rotating blocks needs checkcollision
 piece lock is one frame slow
+there is a bug with clearRow. not sure why it happens. 
 
 may need to add queue to avoid mutikey inputs
