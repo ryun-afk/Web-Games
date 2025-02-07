@@ -47,10 +47,11 @@ const PIECES = [
 ];
 
 // Constructor function for a Tetris piece
+// starting position is ~half of board
 function Piece(matrix,color){
     this.matrix = matrix;
     this.color = color;
-    this.x = grid.width/2 - 1;
+    this.x = board[0].length/2 - 1;
     this.y = 0;
 }
 
@@ -59,7 +60,7 @@ function drawPiece(){
     for(var i = 0; i < piece.matrix.length; i++){
         for (var j = 0; j < piece.matrix[0].length; j++){
             if (piece.matrix[i][j]){
-                drawSquare(piece.x + j, piece.y + i, piece.color);
+                drawSquare(piece.x + j - buffer, piece.y + i - buffer, piece.color);
             }
         }
     }
