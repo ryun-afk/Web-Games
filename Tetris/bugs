@@ -1,11 +1,4 @@
 Tetris - 
 Bugs:
-clearLine is not working
 rotating blocks needs checkcollision
 piece lock is one frame slow
-
-Notes:
-grid represents tetris grid with buffer
-    canvas draws grid minus buffer
-    board holds collision data
-    there is discrepency about labeling height and row...

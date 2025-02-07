@@ -55,7 +55,7 @@ function Piece(matrix,color){
     this.matrix = matrix;
     this.color = color;
     this.x = board[0].length/2 - 1;
-    this.y = 0;
+    this.y = 1;
 }
 
 // Draw current piece
@@ -66,6 +66,25 @@ function drawPiece(){
                 drawSquare(piece.x + j - buffer, piece.y + i - buffer, piece.color);
             }
         }
+    }
+}
+
+//  checks for overlaps between board and piece
+function checkCollision(){
+    for(let i = 0; i < piece.matrix.length; i++){
+        for(let j = 0; j < piece.matrix[0].length;j++){
+            if((piece.matrix[i][j]) && board[piece.y + i][piece.x +j] != empty){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function moveLeft(){
+    piece.x -= 1;
+    if(checkCollision()){
+        piece.x += 1;
     }
 }
 
@@ -103,16 +122,20 @@ function transpose(matrix) {
     return result
   }
 
-//  checks for overlaps between board and piece
-function checkCollision(){
-    for(let i = 0; i < piece.matrix.length; i++){
-        for(let j = 0; j < piece.matrix[0].length;j++){
-            if((piece.matrix[i][j]) && board[piece.y + i][piece.x +j] != empty){
-                return true;
-            }
-        }
+function rotatePiece(){
+    temp = piece;
+    piece.matrix = transpose(piece.matrix);
+    piece.matrix = mirror(piece.matrix);
+    if(checkCollision()){
+        piece = temp;
     }
-    return false;
+}
+
+function moveRight(){
+    piece.x += 1;
+    if(checkCollision()){
+        piece.x -= 1;
+    }
 }
 
 function lockPiece(){
@@ -127,29 +150,6 @@ function lockPiece(){
     piece = new Piece(PIECES[random][0],PIECES[random][1]); 
 }
 
-function moveLeft(){
-    piece.x -= 1;
-    if(checkCollision()){
-        piece.x += 1;
-    }
-}
-
-function rotatePiece(){
-    temp = piece.matrix;
-    temp = transpose(temp);
-    temp = mirror(temp);
-    piece.matrix = temp;
-    if(checkCollision()){
-        piece.matrix = p.matrix;
-    }
-}
-
-function moveRight(){
-    piece.x += 1;
-    if(checkCollision()){
-        piece.x -= 1;
-    }
-}
 
 function moveDown(){
     piece.y += 1;
@@ -180,7 +180,7 @@ function keyPush(event) {
     drawGame();
 }
 
-function checkLine(row){
+function checkRow(row){
     for(let i = 0; i < board[row].length; i++){
         if(board[row][i] == empty){
             return false;
@@ -189,16 +189,15 @@ function checkLine(row){
     return true;
 }
 
-function clearLine(bonus = 0){
+function clearRow(){
     for(let i = grid.height + buffer - 1; i > 0; i--){
-        if(checkLine(i)){
-            bonus++;
+        if(checkRow(i)){
+            score = score + 100;
             for(let j = i; j > 0; j--){
                 board[j] = board[j-1];
             }
         }
     }
-    score = score + (bonus*100);
     score_span.innerHTML = score;
 }
 
@@ -233,7 +232,7 @@ function resetGame(){
 }
 
 function updateGame(){
-    clearLine();
+    clearRow();
     moveDown();
     drawGame();
 }
