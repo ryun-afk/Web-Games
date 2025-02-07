@@ -2,3 +2,5 @@ Tetris -
 Bugs:
 rotating blocks needs checkcollision
 piece lock is one frame slow
+
+may need to add queue to avoid mutikey inputs
