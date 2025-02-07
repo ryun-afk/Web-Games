@@ -134,8 +134,8 @@ function moveLeft(){
     }
 }
 
-function rotatePiece(p){
-    temp = p.matrix;
+function rotatePiece(){
+    temp = piece.matrix;
     temp = transpose(temp);
     temp = mirror(temp);
     piece.matrix = temp;
@@ -170,7 +170,7 @@ function keyPush(event) {
     switch (event.keyCode) {
         case 37: moveLeft();
         break;
-        case 38: rotatePiece(piece);
+        case 38: rotatePiece();
         break;
         case 39: moveRight();
         break;
