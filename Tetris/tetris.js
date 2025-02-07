@@ -177,14 +177,22 @@ function keyPush(event) {
     drawGame();
 }
 
-function copyLine(){
-    
+function checkLine(row){
+    for(let i = 0; i < board[row].length; i++){
+        if(board[row][i] == empty){
+            return false;
+        }
+    }
+    return true;
 }
 
 function clearLine(){
-    //need to fix board
-    for(let i = 0; i < board[0].length; i++){
-        board[19][i] = board[19][i-1];
+    for(let i = grid.height + buffer - 1; i > 0; i--){
+        if(checkLine(i)){
+            for(let j = i; j > 0; j--){
+                board[j] = board[j-1];
+            }
+        }
     }
 }
 
@@ -212,7 +220,7 @@ function resetGame(){
 }
 
 function updateGame(){
-    //clearLine();
+    clearLine();
     moveDown();
     drawGame();
 }
