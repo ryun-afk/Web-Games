@@ -8,6 +8,9 @@ const buffer = 3;
 canvas.width = (grid.width) * scalar;
 canvas.height = (grid.height) * scalar;
 
+let score_span = document.getElementById("score");
+let highscore_span = document.getElementById("highscore");
+
 // Create the game board
 const empty = "#f0f0f0";
 const border = "gray";
@@ -186,18 +189,28 @@ function checkLine(row){
     return true;
 }
 
-function clearLine(){
+function clearLine(bonus = 0){
     for(let i = grid.height + buffer - 1; i > 0; i--){
         if(checkLine(i)){
+            bonus++;
             for(let j = i; j > 0; j--){
                 board[j] = board[j-1];
             }
         }
     }
+    score = score + (bonus*100);
+    score_span.innerHTML = score;
 }
 
 //  Reset board
 function resetBoard(){
+    if (score > highscore) {
+        highscore = score;
+    }
+    score = 0;
+    score_span.innerHTML = score;
+    highscore_span.innerHTML = highscore;
+
     for (var i = 0; i < grid.height + buffer + buffer; i++){
         board[i] = [];
         for (let j = 0; j < grid.width+ buffer + buffer; j++){
@@ -226,6 +239,8 @@ function updateGame(){
 }
 
 document.addEventListener("keydown", keyPush);
+let score = 0;
+let highscore = 0;
 let board = [];
 let piece;
 resetGame();
