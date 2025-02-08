@@ -138,6 +138,30 @@ function moveRight(){
     }
 }
 
+function checkRow(row){
+    for(let i = 0; i < board[row].length; i++){
+        if(board[row][i] == empty){
+            return false;
+        }
+    }
+    return true;
+}
+
+function clearRow(){
+    for(let i = board.length - buffer - 1; i > 0; i--){
+        if(checkRow(i)){
+            for(let j = i; j > 0; j--){
+                board[j] = board[j-1];
+            }
+            score = score + 100;
+        }
+    }
+    score_span.innerHTML = score;
+}
+
+//  Reset board
+
+
 function lockPiece(){
     for(let i = 0; i < piece.matrix.length; i++){
         for(let j = 0; j < piece.matrix[0].length;j++){
@@ -146,10 +170,7 @@ function lockPiece(){
             }
         }
     }
-    random = Math.floor(Math.random()*PIECES.length);
-    piece = new Piece(PIECES[random][0],PIECES[random][1]); 
 }
-
 
 function moveDown(){
     piece.y += 1;
@@ -160,8 +181,8 @@ function moveDown(){
         }
         else{
             lockPiece();
+            resetPiece();
         }
-        
     }
 }
 
@@ -178,27 +199,6 @@ function keyPush(event) {
         break;
     }
     drawGame();
-}
-
-function checkRow(row){
-    for(let i = 0; i < board[row].length; i++){
-        if(board[row][i] == empty){
-            return false;
-        }
-    }
-    return true;
-}
-
-function clearRow(){
-    for(let i = grid.height + buffer - 1; i > 0; i--){
-        if(checkRow(i)){
-            score = score + 100;
-            for(let j = i; j > 0; j--){
-                board[j] = board[j-1];
-            }
-        }
-    }
-    score_span.innerHTML = score;
 }
 
 //  Reset board
@@ -232,8 +232,8 @@ function resetGame(){
 }
 
 function updateGame(){
-    clearRow();
     moveDown();
+    clearRow();
     drawGame();
 }
 
