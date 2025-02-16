@@ -12,7 +12,7 @@ let score_span = document.getElementById("score");
 let highscore_span = document.getElementById("highscore");
 
 // Create the game board
-const empty = "#f0f0f0";
+const empty = "black";
 const border = "gray";
 
 //  Draw tile
