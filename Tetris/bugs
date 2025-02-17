@@ -1,8 +1,12 @@
 Tetris - 
 Bugs:
-rotating blocks needs checkcollision
-piece lock is one frame slow
-there is a bug with clearRow. (when double tapping before piece locks?)
+rotation should adjust itself if it cannot rotate
+there is a bug where a column is duplicated upwards. 
+game is not as smooth as regular tetris
 
+features"
 may need to add queue to avoid mutikey inputs
-missing lock delay when moving
+show next piece
+add function to drop piece
+add function to hold piece
+add clock for game duration
