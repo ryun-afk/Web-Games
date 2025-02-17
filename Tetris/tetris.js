@@ -73,7 +73,8 @@ function drawPiece(){
 function checkCollision(){
     for(let i = 0; i < piece.matrix.length; i++){
         for(let j = 0; j < piece.matrix[0].length;j++){
-            if((piece.matrix[i][j]) && board[piece.y + i][piece.x +j] != empty){
+            if((piece.matrix[i][j]==1)
+                 && (board[piece.y + i][piece.x +j] != empty)){
                 return true;
             }
         }
@@ -123,11 +124,11 @@ function transpose(matrix) {
   }
 
 function rotatePiece(){
-    temp = piece;
     piece.matrix = transpose(piece.matrix);
     piece.matrix = mirror(piece.matrix);
     if(checkCollision()){
-        piece = temp;
+        piece.matrix = mirror(piece.matrix);
+        piece.matrix = transpose(piece.matrix);
     }
 }
 
